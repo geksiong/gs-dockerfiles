@@ -1,6 +1,6 @@
 # Apache 2 with modsecurity
 
-FROM debian:wheezy
+FROM debian:jessie
 
 MAINTAINER geksiong@gmail.com
 
@@ -14,8 +14,7 @@ ENV APACHE_LOG_DIR /var/log/apache2
 RUN \
   apt-get update && apt-get install -y \
     apache2 \
-	libapache2-mod-proxy-html \
-	libapache2-modsecurity \
+	libapache2-mod-security2 \
   && cp /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf \
   && a2enmod rewrite \
   && a2enmod headers \
@@ -24,6 +23,7 @@ RUN \
   && a2enmod proxy_http \
   && a2enmod deflate \
   && a2enmod proxy_html \
+  && a2enmod xml2enc \
   && cp /usr/share/zoneinfo/Asia/Singapore /etc/localtime \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
